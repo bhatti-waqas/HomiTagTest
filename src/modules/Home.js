@@ -1,6 +1,15 @@
 
 import React, {Component} from 'react';
-import {Button, View, ActivityIndicator, FlatList, TouchableOpacity, Text } from 'react-native';
+import {
+  Button,
+  View,
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+  Text
+} from 'react-native';
+import { TMDB_URL, TMDB_API_KEY } from '../constants/api';
+import axios from 'axios';
 import styles from '../styles/List'
 
 export default class HomeScreen extends Component {
@@ -13,16 +22,21 @@ export default class HomeScreen extends Component {
   }
 
   componentDidMount(){
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then(response => response.json())
-      .then((responseJson)=> {
-        this.setState({
-          loading: false,
-          dataSource: responseJson
-        })
-        console.log(this.state.dataSource);
-    })
-    .catch(error=>console.log(error)) //to catch the errors if any
+    let url = `${TMDB_URL}/movie/now_playing?api_key=${TMDB_API_KEY}&page=${1}`
+    axios.get(url)
+            .then(response => {
+                console.log('getting data from axios', response.data  );
+                setTimeout(() => {
+                    this.setState({
+                        loading: false,
+                        dataSource: response.data.results
+                    })
+                }, 2000)
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
   }
 
   FlatListItemSeparator = () => {
@@ -35,16 +49,16 @@ export default class HomeScreen extends Component {
   renderItem = (data) =>  {
     return (
       <TouchableOpacity style={styles.list} onPress = { ()=> this.goToProfile(data) } >
-      <Text style={styles.lightText}>{data.item.name}</Text>
-      <Text style={styles.lightText}>{data.item.email}</Text>
-      <Text style={styles.lightText}>{data.item.company.name}</Text>
+      <Text style={styles.lightText}>{data.item.original_title}</Text>
+      <Text style={styles.lightText}>{data.item.overview}</Text>
+      <Text style={styles.lightText}>{data.item.original_title}</Text>
       </TouchableOpacity>
     )
   }
 
   goToProfile = (data) => {
     console.log(data.item)
-    this.props.navigation.navigate('Profile', { itemId: data.id, otherParam: data.item.company.name })
+    this.props.navigation.navigate('Profile', { itemId: data.item.id, otherParam: data })
   }
 
 

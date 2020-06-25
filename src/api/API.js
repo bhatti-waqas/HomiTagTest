@@ -3,9 +3,9 @@ import Toast from 'react-native-root-toast';
 // BASE_URL = "http://13.55.178.56/"  //production
 // BASE_URL = "http://192.168.1.157:3000" //local
 
-TMDB_URL =  "https://api.themoviedb.org/3"//Config.TMDB_URL;
-TMDB_IMG_URL =  "https://image.tmdb.org/t/p"//Config.TMDB_IMG_URL;
-TMDB_API_KEY = "ecef14eac236a5d4ec6ac3a4a4761e8f"//Config.TMDB_API_KEY;
+TMDB_URL =  "https://api.themoviedb.org/3"
+TMDB_IMG_URL =  "https://image.tmdb.org/t/p"
+TMDB_API_KEY = "ecef14eac236a5d4ec6ac3a4a4761e8f"
 
 
 export default class Api {

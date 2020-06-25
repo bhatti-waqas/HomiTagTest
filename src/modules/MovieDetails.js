@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-    StyleSheet,
     ActivityIndicator,
     View,
     Text,
